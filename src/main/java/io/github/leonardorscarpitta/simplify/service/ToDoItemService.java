@@ -2,8 +2,8 @@ package io.github.leonardorscarpitta.simplify.service;
 
 import io.github.leonardorscarpitta.simplify.models.ToDoItem;
 import io.github.leonardorscarpitta.simplify.repository.ToDoItemRepository;
+import io.github.leonardorscarpitta.simplify.utils.domain.ExceptionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,32 +13,32 @@ import java.util.Optional;
 public class ToDoItemService {
 
     @Autowired
-    @Qualifier("toDoItemRepository")
-    ToDoItemRepository tdRepository;
+    ToDoItemRepository toDoItemRepository;
 
     public ToDoItem createTask(ToDoItem todoItem) {
-        return tdRepository.save(todoItem);
+        return toDoItemRepository.save(todoItem);
     }
 
     public List<ToDoItem> listTasks() {
-        return tdRepository.findAll();
+        return toDoItemRepository.findAll();
     }
 
     public ToDoItem updateTask(ToDoItem toDoItem) {
-        return tdRepository.save(toDoItem);
+        return toDoItemRepository.save(toDoItem);
     }
 
     public Optional<ToDoItem> searchById(Long id) {
-        return tdRepository.findById(id);
+        ExceptionHandling.checkForNan(id);
+        return toDoItemRepository.findById(id);
     }
 
     public void deleteTask(Long id) {
-        tdRepository.deleteById(id);
+        ExceptionHandling.checkForNan(id);
+        toDoItemRepository.deleteById(id);
     }
 
     public ToDoItem updateStatus(ToDoItem toDoItem) {
-        Boolean modifiedStatus = !toDoItem.getStatus();
-        toDoItem.setStatus(modifiedStatus);
-        return tdRepository.save(toDoItem);
+        toDoItem.changeStatus();
+        return toDoItemRepository.save(toDoItem);
     }
 }
