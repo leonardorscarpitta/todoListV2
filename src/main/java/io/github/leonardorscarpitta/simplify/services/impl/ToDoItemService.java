@@ -1,7 +1,8 @@
-package io.github.leonardorscarpitta.simplify.service;
+package io.github.leonardorscarpitta.simplify.services.impl;
 
 import io.github.leonardorscarpitta.simplify.models.ToDoItem;
-import io.github.leonardorscarpitta.simplify.repository.ToDoItemRepository;
+import io.github.leonardorscarpitta.simplify.repositories.ToDoItemRepository;
+import io.github.leonardorscarpitta.simplify.services.interfaces.ToDoItemInterface;
 import io.github.leonardorscarpitta.simplify.utils.domain.ExceptionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ToDoItemService {
+public class ToDoItemService implements ToDoItemInterface {
 
     @Autowired
     ToDoItemRepository toDoItemRepository;
 
-    public ToDoItem createTask(ToDoItem todoItem) {
-        return toDoItemRepository.save(todoItem);
+    public void createTask(ToDoItem todoItem) {
+        toDoItemRepository.save(todoItem);
     }
 
     public List<ToDoItem> listTasks() {
