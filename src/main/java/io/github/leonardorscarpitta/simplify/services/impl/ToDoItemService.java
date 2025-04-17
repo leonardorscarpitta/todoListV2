@@ -13,8 +13,11 @@ import java.util.Optional;
 @Service
 public class ToDoItemService implements ToDoItemInterface {
 
-    @Autowired
-    ToDoItemRepository toDoItemRepository;
+    private final ToDoItemRepository toDoItemRepository;
+
+    public ToDoItemService(ToDoItemRepository toDoItemRepository) {
+        this.toDoItemRepository = toDoItemRepository;
+    }
 
     public void createTask(ToDoItem todoItem) {
         toDoItemRepository.save(todoItem);
