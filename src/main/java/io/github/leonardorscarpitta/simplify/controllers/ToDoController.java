@@ -1,10 +1,12 @@
 package io.github.leonardorscarpitta.simplify.controllers;
 
 import io.github.leonardorscarpitta.simplify.models.ToDoItem;
-import io.github.leonardorscarpitta.simplify.service.ToDoItemService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.github.leonardorscarpitta.simplify.services.impl.ToDoItemService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +14,11 @@ import java.util.Optional;
 @RequestMapping("/todo")
 public class ToDoController {
 
-    @Autowired
-    ToDoItemService toDoItemService;
+    private final ToDoItemService toDoItemService;
+
+    public ToDoController(ToDoItemService toDoItemService) {
+        this.toDoItemService = toDoItemService;
+    }
 
     @GetMapping
     public List<ToDoItem> listTasks() {
@@ -26,8 +31,11 @@ public class ToDoController {
     }
 
     @PostMapping
-    public ToDoItem createTask(@RequestBody ToDoItem toDoItem) {
-        return toDoItemService.createTask(toDoItem);
+    public ResponseEntity<HashMap<String,Object>> createTask(@RequestBody ToDoItem toDoItem) {
+        toDoItemService.createTask(toDoItem);
+        HttpStatus httpStatus = HttpStatus.CREATED;
+        HashMap<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task criada com sucesso!");
+        return ResponseEntity.status(httpStatus).body(response);
     }
 
     // FIXME: Incrementar uma forma de fazer com que não seja necessário passar o corpo da tarefa, mas sim somente o ID
@@ -44,7 +52,11 @@ public class ToDoController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
+    public ResponseEntity<HashMap<String,Object>> deleteTask(@PathVariable Long id) {
         toDoItemService.deleteTask(id);
+        HttpStatus httpStatus = HttpStatus.ACCEPTED;
+        HashMap<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task deletada com sucesso!");
+        toDoItemService.deleteTask(id);
+        return ResponseEntity.status(httpStatus).body(response);
     }
 }
