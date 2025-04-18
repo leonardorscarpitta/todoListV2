@@ -21,6 +21,13 @@ public class ToDoItem {
     private Boolean status;
     private Short priority;
 
+    public ToDoItem(ToDoItemDTO todoItem) {
+        this.name = todoItem.name();
+        this.description = todoItem.description();
+        this.status = todoItem.status();
+        this.priority = todoItem.priority();
+    }
+
     public void changeStatus() {
         status = !status;
     }

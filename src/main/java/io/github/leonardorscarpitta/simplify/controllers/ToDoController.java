@@ -1,6 +1,7 @@
 package io.github.leonardorscarpitta.simplify.controllers;
 
 import io.github.leonardorscarpitta.simplify.models.ToDoItem;
+import io.github.leonardorscarpitta.simplify.models.ToDoItemDTO;
 import io.github.leonardorscarpitta.simplify.services.impl.ToDoItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +26,7 @@ public class ToDoController {
     @Operation(summary = "Listar todas as tarefas")
     @ApiResponse(responseCode = "200", description = "Tarefas listadas com sucesso!")
     @GetMapping
-    public List<ToDoItem> listTasks() {
+    public List<ToDoItemDTO> listTasks() {
         return toDoItemService.listTasks();
     }
 
@@ -39,7 +40,7 @@ public class ToDoController {
     @Operation(summary = "Criar nova tarefa")
     @ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso!")
     @PostMapping
-    public ResponseEntity<HashMap<String,Object>> createTask(@RequestBody ToDoItem toDoItem) {
+    public ResponseEntity<HashMap<String,Object>> createTask(@RequestBody ToDoItemDTO toDoItem) {
         toDoItemService.createTask(toDoItem);
         HttpStatus httpStatus = HttpStatus.CREATED;
         HashMap<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task criada com sucesso!");
@@ -49,17 +50,20 @@ public class ToDoController {
     @Operation(summary = "Atualizar alguma informação da tarefa por ID")
     @ApiResponse(responseCode = "200", description = "Informações atualizadas com sucesso!")
     @PutMapping("/{id}")
-    public ToDoItem updateTask(@PathVariable Long id, @RequestBody ToDoItem toDoItem) {
-        toDoItem.setId(id);
-        return toDoItemService.updateTask(toDoItem);
+    public ToDoItemDTO updateTask(@PathVariable Long id, @RequestBody ToDoItemDTO data) {
+        var transferredData = new ToDoItem(data);
+        transferredData.setId(id);
+        var updatedData = toDoItemService.updateTask(transferredData);
+        return new ToDoItemDTO(updatedData);
     }
 
     @Operation(summary = "Alterar o estado da tarefa (concluída/pendente)")
     @ApiResponse(responseCode = "200", description = "Estado da tarefa alterado com sucesso!")
     @PatchMapping("/{id}")
-    public ToDoItem changeStatus(@PathVariable Long id, @RequestBody ToDoItem toDoItem) {
-        toDoItem.setId(id);
-        return toDoItemService.updateStatus(toDoItem);
+    public ToDoItemDTO changeStatus(@PathVariable Long id, @RequestBody ToDoItemDTO data) {
+        var transferredData = new ToDoItem(data);
+        transferredData.setId(id);
+        return new ToDoItemDTO(toDoItemService.updateStatus(transferredData));
     }
 
     @Operation(summary = "Deletar uma tarefa")
