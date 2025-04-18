@@ -1,17 +1,21 @@
 # API - Todo V2
 Desenvolvi essa aplicação para me aprofundar nos conceitos de CRUD, validação de dados, injeção de dependencias, testes unitários e respostas de requisições.
 
-## 1. Rodando a aplicação
-___
-### 1.1 Requisitos
+## Camadas da aplicação
 
-### 1.2 Endpoints
-`GET` `/todo`  - Lista todas as tarefas; <br>
-`POST` `/todo`  - Cria uma tarefa nova; <br>
-`PUT` `/todo/id` - Atualiza alguma informação da tarefa; <br>
-`PATCH` `/todo` - Alterna entre os status da tarefa (concluída/pendente); <br>
-`DELETE` `/todo/id` - Deleta a tarefa; <br>
-### 1.3 Corpo de requisição
+## Utilizando a aplicação
+
+> [!NOTE]
+> Para rodar a aplicação, você deve ter o JDK 17 instalado na máquina!
+
+### Endpoints
+`GET: /todo`  - Lista todas as tarefas; <br>
+`GET: todo/id` - Lista a tarefa com o ID informado; <br>
+`PUT: /todo/id` - Atualiza alguma informação da tarefa; <br>
+`POST: /todo`  - Cria uma tarefa nova; <br>
+`PATCH: /todo` - Alterna entre os status da tarefa (concluída/pendente); <br>
+`DELETE: /todo/id` - Deleta a tarefa; <br>
+#### Corpo da requisição
 ```json
 {
     "name": "Nome da tarefa",
@@ -19,4 +23,29 @@ ___
     "status": false,
     "priority": 2 
 }
+```
+
+## Estrutura do projeto
+```
+📦 src
+ ┗ 📂 main
+     ┗ 📂 java
+         ┗ 📂 io.github.leonardorscarpitta.simplify
+             ┣ 📂 controllers
+             ┃ ┣ 📄 ManageHttpStatus.java
+             ┃ ┗ 📄 ToDoController.java
+             ┣ 📂 models
+             ┃ ┗ 📄 ToDoItem.java
+             ┣ 📂 repositories
+             ┃ ┗ 📄 ToDoItemRepository.java
+             ┣ 📂 services
+             ┃ ┣ 📂 impl
+             ┃ ┗ 📂 interfaces
+             ┣ 📂 utils
+             ┃ ┗ 📂 domain
+             ┃     ┗ 📄 ExceptionHandling.java
+             ┣ ┗📂 exceptions
+             ┃     ┗ 📄 InvalidValue.java 
+             ┗ 📄 SimplifyApplication.java
+
 ```
