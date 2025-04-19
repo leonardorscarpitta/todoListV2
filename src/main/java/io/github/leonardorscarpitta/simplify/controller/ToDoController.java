@@ -74,7 +74,6 @@ public class ToDoController {
         toDoItemServiceImpl.deleteTask(id);
         HttpStatus httpStatus = HttpStatus.ACCEPTED;
         HashMap<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task deletada com sucesso!");
-        toDoItemServiceImpl.deleteTask(id);
         return ResponseEntity.status(httpStatus).body(response);
     }
 }
