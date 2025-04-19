@@ -6,6 +6,7 @@ import io.github.leonardorscarpitta.simplify.service.ToDoItemServiceImpl;
 import io.github.leonardorscarpitta.simplify.controller.util.ManageHttpStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class ToDoController {
     @Operation(summary = "Listar tarefa por ID")
     @ApiResponse(responseCode = "200", description = "Tarefa listada com sucesso!")
     @GetMapping("/{id}")
-    public Optional<ToDoItem> searchById(@PathVariable Long id) {
-        return toDoItemServiceImpl.searchById(id);
+    public Optional<ResponseEntity<ToDoItemDTO>> searchById(@PathVariable Long id) {
+        return toDoItemServiceImpl.searchById(id).map(item -> ResponseEntity.ok(new ToDoItemDTO(item)));
     }
 
     @Operation(summary = "Criar nova tarefa")
