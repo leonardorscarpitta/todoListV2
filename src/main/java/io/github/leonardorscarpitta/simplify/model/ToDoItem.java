@@ -1,5 +1,6 @@
-package io.github.leonardorscarpitta.simplify.models;
+package io.github.leonardorscarpitta.simplify.model;
 
+import io.github.leonardorscarpitta.simplify.dto.ToDoItemDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

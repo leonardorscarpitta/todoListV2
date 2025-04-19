@@ -1,4 +1,6 @@
-package io.github.leonardorscarpitta.simplify.models;
+package io.github.leonardorscarpitta.simplify.dto;
+
+import io.github.leonardorscarpitta.simplify.model.ToDoItem;
 
 public record ToDoItemDTO(
         String name,

@@ -1,12 +1,12 @@
-package io.github.leonardorscarpitta.simplify.services.interfaces;
+package io.github.leonardorscarpitta.simplify.service;
 
-import io.github.leonardorscarpitta.simplify.models.ToDoItem;
-import io.github.leonardorscarpitta.simplify.models.ToDoItemDTO;
+import io.github.leonardorscarpitta.simplify.model.ToDoItem;
+import io.github.leonardorscarpitta.simplify.dto.ToDoItemDTO;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ToDoItemInterface {
+public interface ToDoItemService {
     void createTask(ToDoItemDTO todoItemDto);
     List<ToDoItemDTO> listTasks();
     Optional<ToDoItem> searchById(Long id);

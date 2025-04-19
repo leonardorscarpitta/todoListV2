@@ -1,10 +1,8 @@
-package io.github.leonardorscarpitta.simplify.services.impl;
+package io.github.leonardorscarpitta.simplify.service;
 
-import io.github.leonardorscarpitta.simplify.models.ToDoItem;
-import io.github.leonardorscarpitta.simplify.models.ToDoItemDTO;
-import io.github.leonardorscarpitta.simplify.repositories.ToDoItemRepository;
-import io.github.leonardorscarpitta.simplify.services.interfaces.ToDoItemInterface;
-import io.github.leonardorscarpitta.simplify.utils.domain.ExceptionHandling;
+import io.github.leonardorscarpitta.simplify.model.ToDoItem;
+import io.github.leonardorscarpitta.simplify.dto.ToDoItemDTO;
+import io.github.leonardorscarpitta.simplify.repository.ToDoItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ToDoItemService implements ToDoItemInterface {
+public class ToDoItemServiceImpl implements ToDoItemService {
 
     private final ToDoItemRepository toDoItemRepository;
 
-    public ToDoItemService(ToDoItemRepository toDoItemRepository) {
+    public ToDoItemServiceImpl(ToDoItemRepository toDoItemRepository) {
         this.toDoItemRepository = toDoItemRepository;
     }
 
@@ -38,12 +36,10 @@ public class ToDoItemService implements ToDoItemInterface {
     public Optional<ToDoItem> searchById(Long id) {
         var toDoItem = new ToDoItem();
         toDoItem.setId(id);
-        ExceptionHandling.checkForNan(id);
         return toDoItemRepository.findById(toDoItem.getId());
     }
 
     public void deleteTask(Long id) {
-        ExceptionHandling.checkForNan(id);
         toDoItemRepository.deleteById(id);
     }
 

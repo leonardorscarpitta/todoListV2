@@ -1,4 +1,4 @@
-package io.github.leonardorscarpitta.simplify.controllers;
+package io.github.leonardorscarpitta.simplify.controller.util;
 
 import org.springframework.http.HttpStatus;
 
