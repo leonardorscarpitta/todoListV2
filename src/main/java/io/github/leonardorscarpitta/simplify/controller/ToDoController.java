@@ -1,12 +1,12 @@
 package io.github.leonardorscarpitta.simplify.controller;
 
-import io.github.leonardorscarpitta.simplify.model.ToDoItem;
-import io.github.leonardorscarpitta.simplify.dto.ToDoItemDTO;
-import io.github.leonardorscarpitta.simplify.service.ToDoItemServiceImpl;
 import io.github.leonardorscarpitta.simplify.controller.util.ManageHttpStatus;
+import io.github.leonardorscarpitta.simplify.dto.ToDoItemDTO;
+import io.github.leonardorscarpitta.simplify.model.ToDoItem;
+import io.github.leonardorscarpitta.simplify.service.ToDoItemServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.apache.coyote.Response;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,21 +26,30 @@ public class ToDoController {
     }
 
     @Operation(summary = "Listar todas as tarefas")
-    @ApiResponse(responseCode = "200", description = "Tarefas listadas com sucesso!")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Tarefas listadas com sucesso!"),
+            @ApiResponse(responseCode = "400", ref = "badRequest"),
+    })
     @GetMapping
     public List<ToDoItemDTO> listTasks() {
         return toDoItemServiceImpl.listTasks();
     }
 
     @Operation(summary = "Listar tarefa por ID")
-    @ApiResponse(responseCode = "200", description = "Tarefa listada com sucesso!")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Tarefa listada com sucesso!"),
+            @ApiResponse(responseCode = "400", ref = "badRequest"),
+    })
     @GetMapping("/{id}")
     public Optional<ResponseEntity<ToDoItemDTO>> searchById(@PathVariable Long id) {
         return toDoItemServiceImpl.searchById(id).map(item -> ResponseEntity.ok(new ToDoItemDTO(item)));
     }
 
     @Operation(summary = "Criar nova tarefa")
-    @ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso!")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso!"),
+            @ApiResponse(responseCode = "400", ref = "badRequest"),
+    })
     @PostMapping
     public ResponseEntity<HashMap<String,Object>> createTask(@RequestBody ToDoItemDTO toDoItem) {
         toDoItemServiceImpl.createTask(toDoItem);
@@ -50,7 +59,10 @@ public class ToDoController {
     }
 
     @Operation(summary = "Atualizar alguma informação da tarefa por ID")
-    @ApiResponse(responseCode = "200", description = "Informações atualizadas com sucesso!")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Informações atualizadas com sucesso!"),
+            @ApiResponse(responseCode = "400", ref = "badRequest"),
+    })
     @PutMapping("/{id}")
     public ToDoItemDTO updateTask(@PathVariable Long id, @RequestBody ToDoItemDTO data) {
         var transferredData = new ToDoItem(data);
@@ -60,7 +72,11 @@ public class ToDoController {
     }
 
     @Operation(summary = "Alterar o estado da tarefa (concluída/pendente)")
-    @ApiResponse(responseCode = "200", description = "Estado da tarefa alterado com sucesso!")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Estado da tarefa alterado com sucesso!"),
+            @ApiResponse(responseCode = "400", ref = "badRequest"),
+            @ApiResponse(ref = "internalError")
+    })
     @PatchMapping("/{id}")
     public ToDoItemDTO changeStatus(@PathVariable Long id, @RequestBody ToDoItemDTO data) {
         var transferredData = new ToDoItem(data);
@@ -69,7 +85,10 @@ public class ToDoController {
     }
 
     @Operation(summary = "Deletar uma tarefa")
-    @ApiResponse(responseCode = "202", description = "Tarefa excluída com sucesso!")
+    @ApiResponses({
+            @ApiResponse(responseCode = "202", description = "Tarefa excluída com sucesso!"),
+            @ApiResponse(responseCode = "400", ref = "badRequest"),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<HashMap<String,Object>> deleteTask(@PathVariable Long id) {
         toDoItemServiceImpl.deleteTask(id);
