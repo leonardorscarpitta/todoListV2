@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -51,10 +51,10 @@ public class ToDoController {
             @ApiResponse(responseCode = "400", ref = "badRequest"),
     })
     @PostMapping
-    public ResponseEntity<HashMap<String,Object>> createTask(@RequestBody ToDoItemDTO toDoItem) {
+    public ResponseEntity<Map<String,Object>> createTask(@RequestBody ToDoItemDTO toDoItem) {
         toDoItemServiceImpl.createTask(toDoItem);
         HttpStatus httpStatus = HttpStatus.CREATED;
-        HashMap<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task criada com sucesso!");
+        Map<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task criada com sucesso!");
         return ResponseEntity.status(httpStatus).body(response);
     }
 
@@ -90,10 +90,10 @@ public class ToDoController {
             @ApiResponse(responseCode = "400", ref = "badRequest"),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<HashMap<String,Object>> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Map<String,Object>> deleteTask(@PathVariable Long id) {
         toDoItemServiceImpl.deleteTask(id);
         HttpStatus httpStatus = HttpStatus.ACCEPTED;
-        HashMap<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task deletada com sucesso!");
+        Map<String, Object> response = ManageHttpStatus.manage(httpStatus, "Task deletada com sucesso!");
         return ResponseEntity.status(httpStatus).body(response);
     }
 }

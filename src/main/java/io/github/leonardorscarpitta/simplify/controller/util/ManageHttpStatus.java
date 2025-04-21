@@ -4,13 +4,15 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ManageHttpStatus {
-    public static HashMap<String,Object> manage(HttpStatus status, String message) {
-        HashMap<String,Object> response = new HashMap<>();
-        response.put("status", status.value());
-        response.put("message", message);
-        response.put("timestamp", LocalDateTime.now());
-        return response;
+
+    public static Map<String,Object> manage(HttpStatus status, String message) {
+        return Map.of(
+                "status", status.value(),
+                "message", message,
+                "timestamp", LocalDateTime.now()
+        );
     }
 }

@@ -9,21 +9,28 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
         OpenAPI openApi = new OpenAPI();
-
-        openApi.components(new Components()
-                .addResponses("badRequest", new ApiResponse().description("Requisição inválida!"))
-                .addResponses("unauthorized", new ApiResponse().description("Não autorizado!"))
-                .addResponses("forbidden", new ApiResponse().description("Acesso proibido!"))
-                .addResponses("notFound", new ApiResponse().description("Recurso não encontrado!"))
-                .addResponses("conflict", new ApiResponse().description("Conflito no estado do recurso!"))
-                .addResponses("internalError", new ApiResponse().description("Erro interno do servidor!"))
+        Components component = new Components();
+        Map<String, String> response = Map.of(
+                "badRequest", "Requisição inválida!",
+                "unauthorized", "Não autorizado!",
+                "forbidden", "Não autorizado!",
+                "notFound", "Recurso não encontrado!",
+                "conflict", "Conflito no estado do recurso!",
+                "internalError", "Erro interno do servidor!"
         );
+
+        for (Map.Entry<String, String> entry: response.entrySet()) {
+            component.addResponses(entry.getKey(), new ApiResponse().description(entry.getValue()));
+        }
 
         openApi.info(new Info()
                 .title("API de gerenciamento de tarefas")
