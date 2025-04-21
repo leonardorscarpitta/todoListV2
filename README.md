@@ -1,27 +1,50 @@
-# API - Todo V2
-Desenvolvi essa aplicação para me aprofundar nos conceitos de CRUD, validação de dados, injeção de dependencias, testes unitários e respostas de requisições.
+# 📝 API - Todo V2
 
-## Estrutura
-A estrutura segue uma arquitetura tradicional de um projeto Spring Boot, separando responsabilidades por pacotes: configuração, controle, DTOs, modelo de dados, repositórios e serviços.
-___
-`config` - Configuração do SwaggerAPI para auto Documentação.<br>
-`controller` - Realização de requisições através dos verbos HTTP, está diretamente ligada à service.<br>
-`dto` - Camada que adiciona uma segurança a mais ao evitar que a classe envie dados diretos ao cliente.<br>
-`model` - Responsabilidade de abstração dos atributos e métodos.<br>
-`repository` - Comunicação direta com o banco de dados.<br>
-`service` - Métodos para comunicação com o banco de dados, está diretamente ligada ao repository.<br>
+Este projeto foi desenvolvido com o objetivo de consolidar conhecimentos em **CRUD**, **validação de dados**, **injeção de dependências**, **testes unitários** e **tratamento de respostas HTTP**, utilizando o **Spring Boot** como framework principal.
 
-## Informações da aplicação
-- Versão JDK 17;
-- Banco de dados PostgreSQL;
+---
 
-### Endpoints
-`GET: /todo`  - Lista todas as tarefas; <br>
-`GET: todo/id` - Lista a tarefa com o ID informado; <br>
-`PUT: /todo/id` - Atualiza alguma informação da tarefa; <br>
-`POST: /todo`  - Cria uma tarefa nova; <br>
-`PATCH: /todo` - Alterna entre os status da tarefa (concluída/pendente); <br>
-`DELETE: /todo/id` - Deleta a tarefa; <br>
+## 📁 Estrutura do Projeto
 
-> [!NOTE]
-> A API está documentada no Swagger, ao rodar a aplicação, ela pode ser acessada via `http://<ip>:<porta>/swagger-ui/index.html` - lá você pode acessar mais informações como o corpo da requisição!
+A arquitetura da aplicação segue os padrões convencionais do Spring Boot, com separação de responsabilidades por pacotes:
+
+- `config`: configurações globais da aplicação, incluindo o Swagger para documentação automática da API.
+- `controller`: camada responsável por expor os endpoints e controlar as requisições HTTP.
+- `dto`: camada intermediária para transferência de dados entre cliente e servidor, garantindo segurança e desacoplamento entre as camadas.
+- `model`: representação das entidades do sistema.
+- `repository`: interfaces responsáveis pela comunicação com o banco de dados.
+- `service`: camada de regras de negócio, interligando os controllers aos repositórios.
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+- **Java JDK**: 17
+- **Framework**: Spring Boot
+- **Banco de Dados**: PostgreSQL
+- **Documentação**: Swagger UI
+
+---
+
+## 🚀 Endpoints Disponíveis
+
+| Método | Endpoint        | Descrição                                 |
+|--------|------------------|---------------------------------------------|
+| GET    | `/todo`          | Lista todas as tarefas                     |
+| GET    | `/todo/{id}`     | Retorna a tarefa com o ID informado        |
+| POST   | `/todo`          | Cria uma nova tarefa                       |
+| PUT    | `/todo/{id}`     | Atualiza as informações de uma tarefa      |
+| PATCH  | `/todo`          | Alterna o status da tarefa (concluída/pendente) |
+| DELETE | `/todo/{id}`     | Deleta uma tarefa                          |
+
+---
+
+## 📚 Documentação da API
+
+A documentação interativa da API pode ser acessada via Swagger, disponível após iniciar a aplicação:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+> ⚠️ Certifique-se de substituir o `localhost:8080` pelo IP e porta corretos, se estiver rodando em outro ambiente.
