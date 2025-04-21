@@ -29,8 +29,6 @@ public class SwaggerConfig {
                 .title("API de gerenciamento de tarefas")
                 .version("1.0.0")
                 .description("Desenvolvi essa aplicação para me aprofundar nos conceitos de CRUD, validação de dados, injeção de dependencias, testes unitários, documentação com Swagger e respostas de requisições.")
-                .termsOfService("http://swagger.io/terms/")
-                .license(new License().name("MIT").url("https://opensource.org/licenses/MIT"))
                 .contact(new Contact().name("Leonardo Rocha Scarpitta").url("https://www.linkedin.com/in/leonardorscarpitta/"))
         );
 
